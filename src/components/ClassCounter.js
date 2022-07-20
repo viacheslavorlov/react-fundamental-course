@@ -30,6 +30,7 @@ class ClassCounter extends Component {
 			<div>
 				<h1>Классовый кмпонент</h1>
 				<input
+					placeholder={'введите текст'}
 					type="text"
 					value={this.state.value}
 					onChange={event => this.setValue(event.target.value)}/> {/* двустороннее связывание - value элемента

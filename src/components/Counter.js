@@ -2,8 +2,8 @@ import React from 'react';
 import {useState} from "react";
 
 const Counter = () => {
-	const [likes, setLikes] = useState(5); //* состояние 1
-	const [value, setValue] = useState('текст в инпуте'); //* состояние 2
+	const [likes, setLikes] = useState(0); //* состояние 1
+	const [value, setValue] = useState(''); //* состояние 2
 
 	function increment() {
 		setLikes(likes + 1);
@@ -17,6 +17,7 @@ const Counter = () => {
 		<div>
 			<h1>Функциональный компонент</h1>
 			<input
+				placeholder={'введите текст'}
 				type="text"
 				value={value}
 				onChange={event => setValue(event.target.value)}/> {/* двустороннее связывание - value элемента

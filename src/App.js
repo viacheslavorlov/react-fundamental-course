@@ -4,32 +4,43 @@ import Counter from "./components/Counter";
 import ClassCounter from "./components/ClassCounter";
 
 import PostList from "./components/PostList";
+import MyButton from "./components/UI/button/MyButton";
+import MyInput from "./components/UI/input/MyInput";
 
 function App() {
-	const [posts, setPosts] = useState(
-		[
-			{id: 1, title: 'Javascript', body: 'Description'},
-			{id: 2, title: 'Python', body: 'Some Description'},
-			{id: 3, title: 'C++', body: 'Useful Description'}
-		]
-	);
+    const [posts, setPosts] = useState(
+        [
+            {id: 1, title: 'Javascript', body: 'Description'},
+            {id: 2, title: 'Python', body: 'Some Description'},
+            {id: 3, title: 'C++', body: 'Useful Description'}
+        ]
+    );
 
-	const [posts2, setPosts2] = useState(
-		[
-			{id: 1, title: 'JS', body: 'Description'},
-			{id: 2, title: 'TS', body: 'Some Description'},
-			{id: 3, title: 'React', body: 'Useful Description'}
-		]
-	);
+    const [title, setTitle] = useState('');
 
-	return (
-		<div className="App">
-			<PostList list={posts} title={'Список постов про разные языки'}/>
-			<PostList list={posts2} title={'Список постов про JS'}/>
-			<Counter/>
-			<ClassCounter/>
-		</div>
-	)
+    const addNewPost = (e) => {
+        e.preventDefault();
+        console.log(title);
+    }
+
+    return (
+        <div className="App">
+            <form>
+                {/*Управляемый компонент*/}
+                <MyInput
+                    type="text"
+                    placeholder={'название поста'}
+                    value={title}
+                    onChange={e => setTitle(e.target.value)}
+                />
+                <MyInput type="text" placeholder={'описание поста'}/>
+                <MyButton onClick={addNewPost}>Создать пост</MyButton>
+            </form>
+            <PostList list={posts} title={'Список постов про разные языки'}/>
+            <Counter/>
+            <ClassCounter/>
+        </div>
+    )
 }
 
 export default App;
