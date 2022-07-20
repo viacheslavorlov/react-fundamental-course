@@ -5,8 +5,8 @@ const PostList = ({list, title}) => {  //* деструктуризация пр
 	return (
 		<div>
 			<h1 style={{textAlign: 'center'}}>{title}.</h1>
-			{list.map(item => {
-				return <PostItem post={item} key={item.id}/>  //* рендеринг элемента
+			{list.map((item, index) => {
+				return <PostItem number={index + 1} post={item} key={item.id}/>  //* рендеринг элемента
 			})}
 		</div>
 	);
