@@ -4,8 +4,8 @@ import Counter from "./components/Counter";
 import ClassCounter from "./components/ClassCounter";
 
 import PostList from "./components/PostList";
-import MyButton from "./components/UI/button/MyButton";
-import MyInput from "./components/UI/input/MyInput";
+import PostForm from "./components/PostForm/PostForm";
+import MySelect from "./components/UI/select/MySelect";
 
 function App() {
     const [posts, setPosts] = useState(
@@ -16,36 +16,31 @@ function App() {
         ]
     );
 
-    const [post, setPost] = useState({title: '', body: ''});
 
-    const addNewPost = (e) => {
-        e.preventDefault();
-        setPosts([...posts, {...post, id: Date.now}]);
+    const createPost = (newPost) => {
+        setPosts([...posts, newPost]);
+    }
 
-        setPost({title: '', body: ''})
-
-        console.log(post, posts);
+    const deletePost = (post) => {
+        setPosts(posts.filter(p => p.id !== post.id));
     }
 
     return (
         <div className="App">
-            <form>
-                {/*Управляемый компонент*/}
-                <MyInput
-                    type="text"
-                    placeholder={'название поста'}
-                    value={post.title}
-                    onChange={e => setPost({...post, title: e.target.value})}
-                />
-                <MyInput
-                    type="text"
-                    placeholder={'описание поста'}
-                    value={post.body}
-                    onChange={e => setPost({...post, body: e.target.value})}
-                />
-                <MyButton onClick={addNewPost}>Создать пост</MyButton>
-            </form>
-            <PostList list={posts} title={'Список постов про разные языки'}/>
+            <PostForm createPost={createPost}/>
+            <hr style={{margin: '15px'}}/>
+            <MySelect defaultValue={'Сортировака'}
+                      options={[
+                          {value: 'title', name: 'По названию'},
+                          {value: 'body', name: 'По содержанию'}
+                      ]}/>
+            {posts.length === 0
+                ? <h1 style={{textAlign: 'center'}}>Постов нет.</h1>
+                : <PostList
+                    deletePost={deletePost}
+                    list={posts}
+                    title={'Список постов про разные языки'}/>}
+
             <Counter/>
             <ClassCounter/>
         </div>
