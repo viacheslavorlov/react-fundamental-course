@@ -5,7 +5,7 @@ import ClassCounter from "./components/ClassCounter";
 
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm/PostForm";
-import MySelect from "./components/UI/select/MySelect";
+import PostFIlter from "./components/PostFilter/PostFIlter";
 
 
 function App() {
@@ -34,34 +34,27 @@ function App() {
             return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]));
         }
         return posts;
-    }, [selectedSort, posts]);
+    }, [posts,selectedSort]);
+    const sortedAndSearched = useMemo(() => {
+        return sortedPosts.filter(item => {
+            return item.title.includes(searchQuery);
+        })
+    }, [searchQuery, sortedPosts])
 
     const sortPosts = (sort) => {
       setSelectedSort(sort);
     }
-    
-
 
     return (
         <div className="App">
             <PostForm createPost={createPost}/>
             <hr style={{margin: '15px'}}/>
-            <input
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                placeholder={'Поиск'}/>
-            <MySelect defaultValue={'Сортировака'}
-                      value={selectedSort}
-                      onChange={sort => sortPosts(sort)}
-                      options={[
-                          {value: 'title', name: 'По названию'},
-                          {value: 'body', name: 'По содержанию'}
-                      ]}/>
-            {posts.length === 0
+            <PostFIlter searchQuery={searchQuery} setSearchQuery={setSearchQuery} sortPosts={sortPosts} selectedSort={selectedSort}/>
+            {sortedAndSearched.length === 0
                 ? <h1 style={{textAlign: 'center'}}>Постов нет.</h1>
                 : <PostList
                     deletePost={deletePost}
-                    posts={sortedPosts}
+                    posts={sortedAndSearched}
                     title={'Список постов про разные языки'}/>}
 
             <Counter/>
