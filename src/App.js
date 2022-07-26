@@ -6,6 +6,8 @@ import ClassCounter from "./components/ClassCounter";
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm/PostForm";
 import PostFIlter from "./components/PostFilter/PostFIlter";
+import MyModal from "./components/UI/MyModal/MyModal";
+import MyButton from "./components/UI/button/MyButton";
 
 
 function App() {
@@ -16,12 +18,15 @@ function App() {
             {id: 3, title: 'C++', body: 'Useful Description'}
         ]
     );
-    const [selectedSort, setSelectedSort] = useState('');
-    const [searchQuery, setSearchQuery] = useState('');
 
-    
+    const [filter, setFilter] = useState({query: '', sort: ''});
+    const [visible, setVisible] = useState(false);
+
     const createPost = (newPost) => {
-        setPosts([...posts, newPost]);
+        if(newPost.body !== '' && newPost.title !== '') {
+            setPosts([...posts, newPost]);
+            setVisible(false);
+        }
     }
 
     const deletePost = (post) => {
@@ -30,33 +35,34 @@ function App() {
 
     const sortedPosts = useMemo(() => {
         console.log('функция отработала')
-        if(selectedSort) {
-            return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]));
+        if(filter.sort) {
+            return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]));
         }
         return posts;
-    }, [posts,selectedSort]);
+    }, [filter.sort, posts]);
     const sortedAndSearched = useMemo(() => {
         return sortedPosts.filter(item => {
-            return item.title.includes(searchQuery);
-        })
-    }, [searchQuery, sortedPosts])
+            return item.title.toLowerCase().includes(filter.query.toLowerCase());
+        });
+    }, [filter.query, sortedPosts])
 
-    const sortPosts = (sort) => {
-      setSelectedSort(sort);
-    }
+
 
     return (
         <div className="App">
-            <PostForm createPost={createPost}/>
-            <hr style={{margin: '15px'}}/>
-            <PostFIlter searchQuery={searchQuery} setSearchQuery={setSearchQuery} sortPosts={sortPosts} selectedSort={selectedSort}/>
-            {sortedAndSearched.length === 0
-                ? <h1 style={{textAlign: 'center'}}>Постов нет.</h1>
-                : <PostList
-                    deletePost={deletePost}
-                    posts={sortedAndSearched}
-                    title={'Список постов про разные языки'}/>}
+            <MyButton onClick={() => setVisible(true)}>
+                Создать пост!
+            </MyButton>
+            <MyModal visible={visible} setVisible={setVisible}>
+                <PostForm createPost={createPost} setVisible={setVisible}/>
+            </MyModal>
 
+            <hr style={{margin: '15px'}}/>
+            <PostFIlter filter={filter} setFilter={setFilter}/>
+            <PostList
+                deletePost={deletePost}
+                posts={sortedAndSearched}
+                title={'Список постов про разные языки'}/>
             <Counter/>
             <ClassCounter/>
         </div>
