@@ -3,7 +3,7 @@ import React, {useMemo, useState} from "react";
 import Counter from "./components/Counter";
 import ClassCounter from "./components/ClassCounter";
 
-import PostList from "./components/PostList";
+import PostList from "./components/PostList/PostList";
 import PostForm from "./components/PostForm/PostForm";
 import PostFIlter from "./components/PostFilter/PostFIlter";
 import MyModal from "./components/UI/MyModal/MyModal";
