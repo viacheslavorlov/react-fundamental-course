@@ -1,5 +1,5 @@
 import './styles/App.css';
-import React, {useMemo, useState} from "react";
+import React, {useState} from "react";
 import Counter from "./components/Counter";
 import ClassCounter from "./components/ClassCounter";
 
@@ -8,6 +8,7 @@ import PostForm from "./components/PostForm/PostForm";
 import PostFIlter from "./components/PostFilter/PostFIlter";
 import MyModal from "./components/UI/MyModal/MyModal";
 import MyButton from "./components/UI/button/MyButton";
+import {usePosts} from "./hooks/usePosts";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
 
     const [filter, setFilter] = useState({query: '', sort: ''});
     const [visible, setVisible] = useState(false);
+    const sortedAndSearched = usePosts(posts, filter.sort, filter.query)
 
     const createPost = (newPost) => {
         if(newPost.body !== '' && newPost.title !== '') {
@@ -30,23 +32,8 @@ function App() {
     }
 
     const deletePost = (post) => {
-        setPosts(sortedPosts.filter(p => p.id !== post.id));
+        setPosts(posts.filter(p => p.id !== post.id));
     }
-
-    const sortedPosts = useMemo(() => {
-        console.log('функция отработала')
-        if(filter.sort) {
-            return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]));
-        }
-        return posts;
-    }, [filter.sort, posts]);
-    const sortedAndSearched = useMemo(() => {
-        return sortedPosts.filter(item => {
-            return item.title.toLowerCase().includes(filter.query.toLowerCase());
-        });
-    }, [filter.query, sortedPosts])
-
-
 
     return (
         <div className="App">
