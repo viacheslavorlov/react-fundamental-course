@@ -15,14 +15,7 @@ import {useFetching} from "./hooks/useFetching";
 
 
 function App() {
-    const [posts, setPosts] = useState(
-        [
-            {id: 1, title: 'Javascript', body: 'Description'},
-            {id: 2, title: 'Python', body: 'Some Description'},
-            {id: 3, title: 'C++', body: 'Useful Description'}
-        ]
-    );
-
+    const [posts, setPosts] = useState([]);
     const [filter, setFilter] = useState({query: '', sort: ''});
     const [visible, setVisible] = useState(false);
     const sortedAndSearched = usePosts(posts, filter.sort, filter.query);
@@ -68,9 +61,10 @@ function App() {
 
             <hr style={{margin: '15px'}}/>
             <PostFIlter filter={filter} setFilter={setFilter}/>
+
             {isPostsLoading
                 ? <div style={{display: 'flex', justifyContent: 'center', margin: 50}}><Loader/></div>
-                : <PostList
+                : postError ? <h1>произошла ошибка</h1> : <PostList
                     deletePost={deletePost}
                     posts={sortedAndSearched}
                     title={'Список постов про разные языки'}/>}
