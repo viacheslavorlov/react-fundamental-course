@@ -24,9 +24,10 @@ function App() {
 
     const sortedAndSearched = usePosts(posts, filter.sort, filter.query);
     const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
-        const post = await PostService.getAll();
+        const post = await PostService.getAll(limit, page);
         setPosts(post.data);
         const totalCount = post.headers['x-total-count'];
+        console.log(totalCount);
         setTotalPages(getPageCount(totalCount, limit));
     });
 
