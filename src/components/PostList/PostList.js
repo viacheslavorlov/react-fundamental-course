@@ -12,13 +12,13 @@ const PostList = ({posts, deletePost, title}) => {  //* деструктуриз
         <div>
             <h1 style={{textAlign: 'center'}}>{title}.</h1>
             <TransitionGroup>
-                {posts.map((item, index) => (<CSSTransition
+                {posts.map(item => (<CSSTransition
                         key={item.id}
                         timeout={500}
                         classNames={'post'}>
                         <PostItem
                             deletePost={deletePost}
-                            number={index + 1}
+                            number={item.id}
                             post={item}/>
                     </CSSTransition>)
                 )}
