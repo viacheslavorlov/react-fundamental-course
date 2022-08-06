@@ -1,16 +1,19 @@
 import './styles/App.css';
 import React from "react";
-import {BrowserRouter} from 'react-router-dom'
-import Posts from "./components/Pages/Posts";
+import {BrowserRouter as Router} from "react-router-dom";
+import Navbar from "./components/UI/navbar/Navbar";
+import AppRouter from "./components/AppRouter/AppRouter";
 
 function App() {
-    return (
-        <div>
-            <BrowserRouter>
-                <Posts/>
-            </BrowserRouter>
-        </div>
-    )
+	return (
+		<Router>
+			<div>
+				<Navbar/>
+				<hr/>
+				<AppRouter/>
+			</div>
+		</Router>
+	)
 }
 
 export default App;
