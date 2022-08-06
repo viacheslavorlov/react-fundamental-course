@@ -46,6 +46,10 @@
     transition: opacity 500ms ease-in;
 }
 
+.post__btns {
+    display: flex;
+}
+
 .remove-btn {
     margin-right: 0.5rem;
 }

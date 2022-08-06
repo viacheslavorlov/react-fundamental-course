@@ -2,7 +2,7 @@ import React from 'react';
 import MyButton from "./UI/button/MyButton";
 
 const PostItem = ({post, deletePost, number}) => {
-
+	const router = useHistory()
 	return (
 		<div className={'post'}>
 			<div className={'post__content'}>
@@ -11,8 +11,11 @@ const PostItem = ({post, deletePost, number}) => {
 			</div>
 			<div className="post__btns">
 				<MyButton
-					onClick={() => deletePost(post)}
-				>
+					onClick={() => deletePost(post)}>
+					Открыть
+				</MyButton>
+				<MyButton
+					onClick={() => deletePost(post)}>
 					Удалить
 				</MyButton>
 			</div>
