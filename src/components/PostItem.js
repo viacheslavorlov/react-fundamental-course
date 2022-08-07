@@ -13,7 +13,7 @@ const PostItem = ({post, deletePost, number}) => {
 			</div>
 			<div className="post__btns">
 				<MyButton
-					onClick={() => deletePost(post)}>
+					onClick={() => router(`/post/${post.id}`)}>
 					Открыть
 				</MyButton>
 				<MyButton
