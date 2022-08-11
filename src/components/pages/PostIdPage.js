@@ -4,25 +4,29 @@ import {useFetching} from "../../hooks/useFetching";
 import PostService from "../../API/PostService/PostService";
 
 const PostIdPage = () => {
-    let {param}  = useParams();
-    const [post, setPost] = useState({});
+	const {id} = useParams();
+	const [post, setPost] = useState({});
 
-    console.log(param);
-    const [fetchPostById, isLoading, error] =useFetching(async (id) => {
-        const response = await PostService.getById(id);
-    });
+	const [fetchPostById, isLoading, error] = useFetching(async () => {
 
-    useEffect(() => {
-        fetchPostById(param.id);
-    });
-    
-    return (
-        <div>
-            <h1>Вы открыли страницу поста #{param.id}!</h1>
-            <div>{post.id}. {post.title}</div>
-            <div>{post.body}</div>
-        </div>
-    );
+		const response = await PostService.getById(id);
+		setPost(response.data);
+		console.log(response);
+	});
+
+	console.log(post)
+	console.log('post: ', post);
+	useEffect(() => {
+		fetchPostById(id);
+	}, [id]);
+	return (
+		<div className="post">
+			<div className="post__content">
+				<h2>#{post.id} {post.title}</h2>
+				<div>{post.body}</div>
+			</div>
+		</div>
+	);
 };
 
 export default PostIdPage;
