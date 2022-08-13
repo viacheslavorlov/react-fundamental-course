@@ -16,7 +16,7 @@ const AppRouter = () => {
 				<Route index element={<Home/>}/>
 				<Route path="posts" element={<Posts/>}/>
 				<Route path="posts/:id" element={<PostIdPage/>}/>
-				<Route path="error" element={<Error/>}/>
+				<Route path="*" element={<Error/>}/>
 				<Route path="about" element={<About/>}/>
 			</Route>
 		</Routes>
